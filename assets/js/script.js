@@ -57,9 +57,7 @@ $ ( document ).ready (function(){
 
         // add and remove clicked styles
         $('.1988').addClass( "current" );
-        $('.2000').removeClass( "current" );
-        $('.2006').removeClass( "current" );
-        $('.2017').removeClass( "current" );
+        $('.2000, .2006, .2017').removeClass( "current" );
 
         // call all box items
         callPageData(maasObjects);
@@ -74,10 +72,8 @@ $ ( document ).ready (function(){
         var maasObjects = ['319075', '502722', '342920', '398250'];
 
         // add and remove clicked styles
-        $('.1988').removeClass( "current" );
+        $('.1988, .2006, .2017').removeClass( "current" );
         $('.2000').addClass( "current" );
-        $('.2006').removeClass( "current" );
-        $('.2017').removeClass( "current" );
 
         // call all box items
         callPageData(maasObjects);
@@ -92,10 +88,8 @@ $ ( document ).ready (function(){
         var maasObjects = ['428736', '460406', '433572', '366937'];
 
         // add and remove clicked styles
-        $('.1988').removeClass( "current" );
-        $('.2000').removeClass( "current" );
+        $('.1988, .2000, .2017').removeClass( "current" );
         $('.2006').addClass( "current" );
-        $('.2017').removeClass( "current" );
 
         // call all box items
         callPageData(maasObjects);
@@ -110,9 +104,7 @@ $ ( document ).ready (function(){
         var maasObjects = ['548603', '564915', '559880', '561523'];
 
         // add and remove clicked styles
-        $('.1988').removeClass( "current" );
-        $('.2000').removeClass( "current" );
-        $('.2006').removeClass( "current" );
+        $('.1988, .2000, .2006').removeClass( "current" );
         $('.2017').addClass( "current" );
 
         // call all box items
@@ -122,7 +114,7 @@ $ ( document ).ready (function(){
         $('.year').html('2017');
     });
 
-// End of all calls.==============================================
+// End of all jQuery calls.==============================================
 });
 
 
@@ -149,7 +141,7 @@ $ ( document ).ready (function(){
             console.log('Your current position is:');
             console.log('Latitude : ' + coordinates.latitude);
             console.log('Longitude: ' + coordinates.longitude);
-            // console.log('More or less ' + coordinates.accuracy + ' meters.');
+            console.log('More or less ' + coordinates.accuracy + ' meters.');
 
             //go get the location name, using the latitude and longitude
             getLocationName(coordinates.latitude, coordinates.longitude);
