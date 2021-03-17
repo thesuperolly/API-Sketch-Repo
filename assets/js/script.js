@@ -16,6 +16,13 @@ $ ( document ).ready (function(){
             $('.card1').append('<h3>' + callData.title + '</h3>');
             $('.card1').append('<p>' + callData.description + '</p>');
         });
+        // Add Image
+        // create image string
+        c1src = '<img src="assets/images/' + maasObjects[0] + '.jpeg" alt="">';
+        // remove old image.
+        $('.card1 .img img').remove();
+        // Add the new image
+        $('.card1 .img').append(c1src);
 
         // call info for box 2
         var c2url = maasURL+maasObjects[1]
@@ -24,6 +31,13 @@ $ ( document ).ready (function(){
             $('.card2').append('<h3>' + callData.title + '</h3>');
             $('.card2').append('<p>' + callData.description + '</p>');
         });
+        // Add Image
+        // create image string
+        c2src = '<img src="assets/images/' + maasObjects[1] + '.jpeg" alt="">';
+        // remove old image.
+        $('.card2 .img img').remove();
+        // Add the new image
+        $('.card2 .img').append(c2src);
 
         // call info for box 3
         var c3url = maasURL+maasObjects[2]
@@ -32,6 +46,13 @@ $ ( document ).ready (function(){
             $('.card3').append('<h3>' + callData.title + '</h3>');
             $('.card3').append('<p>' + callData.description + '</p>');
         });
+        // Add Image
+        // create image string
+        c3src = '<img src="assets/images/' + maasObjects[2] + '.jpeg" alt="">';
+        // remove old image.
+        $('.card3 .img img').remove();
+        // Add the new image
+        $('.card3 .img').append(c3src);
 
         // call info for box 4
         var c4url = maasURL+maasObjects[3]
@@ -40,6 +61,13 @@ $ ( document ).ready (function(){
             $('.card4').append('<h3>' + callData.title + '</h3>');
             $('.card4').append('<p>' + callData.description + '</p>');
         });
+        // Add Image
+        // create image string
+        c4src = '<img src="assets/images/' + maasObjects[3] + '.jpeg" alt="">';
+        // remove old image.
+        $('.card4 .img img').remove();
+        // Add the new image
+        $('.card4 .img').append(c4src);
     };
 
     callPageData(maasObjects);
@@ -184,32 +212,32 @@ $ ( document ).ready (function(){
 
     // distance calculator copy "for rewriting"
 
-    function distance(lon1, lat1, lon2, lat2) {
-        var R = 6371; // Radius of the earth in km
-        var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
-        var dLon = (lon2-lon1).toRad(); 
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2); 
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-        var d = R * c; // Distance in km
-        return d;
-      }
+    // function distance(lon1, lat1, lon2, lat2) {
+    //     var R = 6371; // Radius of the earth in km
+    //     var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
+    //     var dLon = (lon2-lon1).toRad(); 
+    //     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    //             Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+    //             Math.sin(dLon/2) * Math.sin(dLon/2); 
+    //     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    //     var d = R * c; // Distance in km
+    //     return d;
+    //   }
       
-      /** Converts numeric degrees to radians */
-      if (typeof(Number.prototype.toRad) === "undefined") {
-        Number.prototype.toRad = function() {
-          return this * Math.PI / 180;
-        }
-      }
+    //   /** Converts numeric degrees to radians */
+    //   if (typeof(Number.prototype.toRad) === "undefined") {
+    //     Number.prototype.toRad = function() {
+    //       return this * Math.PI / 180;
+    //     }
+    //   }
       
-      window.navigator.geolocation.getCurrentPosition(function(pos) {
-        console.log(pos); 
-        console.log(
-          distance(pos.coords.longitude, pos.coords.latitude, 42.37, 71.03)
-        ); 
+    //   window.navigator.geolocation.getCurrentPosition(function(pos) {
+    //     console.log(pos); 
+    //     console.log(
+    //       distance(pos.coords.longitude, pos.coords.latitude, 42.37, 71.03)
+    //     ); 
 
-      });
+    //   });
 
 
 
