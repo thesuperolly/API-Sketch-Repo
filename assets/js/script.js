@@ -5,6 +5,8 @@ $ ( document ).ready (function(){
     // API Object numbers.
     var maasObjects = ['9731', '352206', '341505', '95470'];
     var maasURL = 'https://api.maas.museum/v2/objects/';
+
+    // Not used yet, but will when turn callPageData into a loop some other solution
     var cards = ['.card1', '.card2', '.card3', '.card4'];
 
     // Initial loaging info
@@ -15,6 +17,8 @@ $ ( document ).ready (function(){
             $('.card1 h3, .card1 p').remove();
             $('.card1').append('<h3>' + callData.title + '</h3>');
             $('.card1').append('<p>' + callData.description + '</p>');
+            // add object title as "alt" text.
+            $('.card1 img').attr('alt', callData.title);
         });
         // Add Image
         // create image string
@@ -30,6 +34,7 @@ $ ( document ).ready (function(){
             $('.card2 h3, .card2 p').remove();
             $('.card2').append('<h3>' + callData.title + '</h3>');
             $('.card2').append('<p>' + callData.description + '</p>');
+            $('.card2 img').attr('alt', callData.title);
         });
         // Add Image
         // create image string
@@ -45,6 +50,7 @@ $ ( document ).ready (function(){
             $('.card3 h3, .card3 p').remove();
             $('.card3').append('<h3>' + callData.title + '</h3>');
             $('.card3').append('<p>' + callData.description + '</p>');
+            $('.card3 img').attr('alt', callData.title);
         });
         // Add Image
         // create image string
@@ -60,6 +66,7 @@ $ ( document ).ready (function(){
             $('.card4 h3, .card4 p').remove();
             $('.card4').append('<h3>' + callData.title + '</h3>');
             $('.card4').append('<p>' + callData.description + '</p>');
+            $('.card1 img').attr('alt', callData.title);
         });
         // Add Image
         // create image string
@@ -155,6 +162,7 @@ $ ( document ).ready (function(){
     // Location variable
     var getLocation = '';
 
+    // Check to see if browser supports geolocation.
     if(navigator.geolocation){
 
         // log geolocation info.
@@ -167,30 +175,38 @@ $ ( document ).ready (function(){
             console.log(pos);
 
             console.log('Your current position is:');
-            console.log('Latitude : ' + coordinates.latitude);
+            console.log('Latitude: ' + coordinates.latitude);
             console.log('Longitude: ' + coordinates.longitude);
-            console.log('More or less ' + coordinates.accuracy + ' meters.');
+            console.log('Approximately ' + coordinates.accuracy + ' meters.');
 
-            //go get the location name, using the latitude and longitude
-            getLocationName(coordinates.latitude, coordinates.longitude);
+            //Call Opencage API to find location name using the latitude and longitude
+            nameCurrentLocation(coordinates.latitude, coordinates.longitude);
+            console.log('Baulkham Hills is just '+ Math.floor(distance(coordinates.longitude, coordinates.latitude, -33.75881, 150.99292))+" Kms");
         };
 
-        //if there is an error returning the geolocation then you should identify it and resolve it
+        //This will help with identifying any errors that occur.
         function error(err) {
             console.warn('ERROR(' + err.code + '): ' + err.message);
         };
 
-        //this is the line that actually prompts the user for their location
+        //Call Navigator for the currnet location.
         navigator.geolocation.getCurrentPosition(success, error);
 
     } else {
-        //if the browser doesn't support geolocation then you need to do some testing
+        // If the browser doesn't support geolocation, tell me.
         ShowError();
     };
 
 
-    // Function to load the location name, based off the lat / long 
-    function getLocationName(lat, long) {
+
+
+
+
+    // OPENCAGE API CALL INFO=======================================================
+
+    // This function converts the navigator.geolocations lattitude and longitude data to return a place name fof the current identified location. 
+    function nameCurrentLocation(lat, long) {
+
         // my OpenCage Geocoder API key
         var OCKey = 'f327e990b3284ef79db7edbe63d8cf38';
     
@@ -204,43 +220,37 @@ $ ( document ).ready (function(){
             // get the location string - only suburb
             var locationString = locationData.results[0].components.suburb;
 
-            $('.location').html(locationData.results[0].components.suburb);
+            $('.location').html(locationString);
         });
     }
 
 
 
-    // distance calculator copy "for rewriting"
+    // DISTANCE CALCULATOR FUNCTION
 
-    // function distance(lon1, lat1, lon2, lat2) {
-    //     var R = 6371; // Radius of the earth in km
-    //     var dLat = (lat2-lat1).toRad();  // Javascript functions in radians
-    //     var dLon = (lon2-lon1).toRad(); 
-    //     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-    //             Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
-    //             Math.sin(dLon/2) * Math.sin(dLon/2); 
-    //     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-    //     var d = R * c; // Distance in km
-    //     return d;
-    //   }
+    function distance(currentLon, currentLat, setLon, setLat) {
+        // Radius of the earth in km
+        var ERadius = 6370;
+        // Convert increments to radians
+        var LatDiff = (setLat-currentLat).toRad();  
+        var LonDiff = (setLon-currentLon).toRad();
+        var a = Math.sin(LatDiff/2)
+            * Math.sin(LatDiff/2)
+            + Math.cos(currentLat.toRad())
+            * Math.cos(setLat.toRad())
+            * Math.sin(LonDiff/2)
+            * Math.sin(LonDiff/2); 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var dist = ERadius * c; // Distance in km
+        return dist;
+      }
       
-    //   /** Converts numeric degrees to radians */
-    //   if (typeof(Number.prototype.toRad) === "undefined") {
-    //     Number.prototype.toRad = function() {
-    //       return this * Math.PI / 180;
-    //     }
-    //   }
+      /** Converts numeric degrees to radians */
+      if (typeof(Number.prototype.toRad) === "undefined") {
+        Number.prototype.toRad = function() {
+          return this * Math.PI / 180;
+        }
+      }
       
-    //   window.navigator.geolocation.getCurrentPosition(function(pos) {
-    //     console.log(pos); 
-    //     console.log(
-    //       distance(pos.coords.longitude, pos.coords.latitude, 42.37, 71.03)
-    //     ); 
-
-    //   });
-
-
-
-
 
 console.log("bam");

@@ -93,7 +93,7 @@ img{
 .content{
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-grow: 1;
     flex-wrap: wrap;
 }
@@ -113,7 +113,7 @@ img{
     margin: 1rem;
     background-color:rgba(255, 255, 255, 0.75);
     box-shadow: 1px 1px 1px #9374ce, -1px -1px 1px #9374ce;
-    max-width: 28%;
+    max-width: 40%;
 }
 
 /* ====================================Detail Styling======================================== */
