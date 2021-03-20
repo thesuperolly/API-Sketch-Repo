@@ -99,6 +99,12 @@ $ ( document ).ready (function(){
 
         // Change year to clicked year.
         $('.year').html("1988");
+
+
+        // change event details
+        getLocation('I was born ',150.99292,-33.75881);
+
+
     });
 
     // When clicking 2000 dot
@@ -115,6 +121,9 @@ $ ( document ).ready (function(){
 
         // Change year to clicked year.
         $('.year').html('2000');
+
+        // change event details
+        getLocation('I finished primary school ',150.7151,-33.5818);
     });
 
     // When clicking 2006 dot
@@ -131,6 +140,9 @@ $ ( document ).ready (function(){
         
         // Change year to clicked year.
         $('.year').html('2006');
+
+        // change event details
+        getLocation('I finished high school ',150.6667,-33.5500);
     });
 
     // When clicking 2017 dot
@@ -147,10 +159,12 @@ $ ( document ).ready (function(){
 
         // Change year to clicked year.
         $('.year').html('2017');
+
+        // change event details
+        getLocation('I got married ',150.8405, -33.5594 );
     });
 
-// End of all jQuery calls.==============================================
-});
+
 
 
 
@@ -160,45 +174,52 @@ $ ( document ).ready (function(){
 
     // Location API============================================
     // Location variable
-    var getLocation = '';
+    var getLocation = function(event, lon, lat){
 
-    // Check to see if browser supports geolocation.
-    if(navigator.geolocation){
+        // Check to see if browser supports geolocation.
+        if(navigator.geolocation){
 
-        // log geolocation info.
-        console.log(navigator.geolocation)
+            // log geolocation info.
+            console.log(navigator.geolocation)
 
-        // having successfully retrieved the locatation data, gather the lattitude and longitude coordinates.
-        function success(pos){
-            // 
-            var coordinates = pos.coords;
-            console.log(pos);
+            // having successfully retrieved the locatation data, gather the lattitude and longitude coordinates.
+            function success(pos){
+                // 
+                var coordinates = pos.coords;
+                console.log(pos);
 
-            console.log('Your current position is:');
-            console.log('Latitude: ' + coordinates.latitude);
-            console.log('Longitude: ' + coordinates.longitude);
-            console.log('Approximately ' + coordinates.accuracy + ' meters.');
+                console.log('Your current position is:');
+                console.log('Latitude: ' + coordinates.latitude);
+                console.log('Longitude: ' + coordinates.longitude);
+                console.log('Approximately ' + coordinates.accuracy + ' meters.');
 
-            //Call Opencage API to find location name using the latitude and longitude
-            nameCurrentLocation(coordinates.latitude, coordinates.longitude);
-            console.log('Baulkham Hills is just '+ Math.floor(distance(coordinates.longitude, coordinates.latitude, -33.75881, 150.99292))+" Kms");
+                //Call Opencage API to find location name using the latitude and longitude
+                nameCurrentLocation(coordinates.latitude, coordinates.longitude);
+                $('.event').html(event +  Math.floor(distance(coordinates.longitude, coordinates.latitude, lon, lat))+" Kms away from");
+                return coordinates;
+            };
+
+            //This will help with identifying any errors that occur.
+            function error(err) {
+                console.warn('ERROR(' + err.code + '): ' + err.message);
+            };
+
+            //Call Navigator for the currnet location.
+            navigator.geolocation.getCurrentPosition(success, error);
+
+            // return coordinates
+
+        } else {
+            // If the browser doesn't support geolocation, tell me.
+            ShowError();
         };
 
-        //This will help with identifying any errors that occur.
-        function error(err) {
-            console.warn('ERROR(' + err.code + '): ' + err.message);
-        };
-
-        //Call Navigator for the currnet location.
-        navigator.geolocation.getCurrentPosition(success, error);
-
-    } else {
-        // If the browser doesn't support geolocation, tell me.
-        ShowError();
     };
+    getLocation('I was born ',150.99292,-33.75881);
 
 
-
+// End of all jQuery calls.==============================================
+});
 
 
 
@@ -251,6 +272,7 @@ $ ( document ).ready (function(){
           return this * Math.PI / 180;
         }
       }
+
       
 
 console.log("bam");
