@@ -26,12 +26,11 @@ h1, h2{
 }
 h1{
     font-size: 5rem;
-    margin-bottom: 1rem;
+    margin: 2rem 0;
     color: var(--c2);
     text-shadow: 2px 2px 2px #9374ce;
     line-height: 5rem;
-    /* position: absolute;
-    transform: rotate(-90deg); */
+    text-align: center;
     
 }
 
@@ -55,6 +54,7 @@ h4{
     mix-blend-mode: multiply;
     padding: .5rem;
     color: var(--c1);
+    text-align: center;
 }
 
 /* =========================================Layout========================================== */
@@ -158,3 +158,15 @@ img{
 .\32 017:hover::after{
     content: "2017";
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 700px) {
+    .card{
+        max-width: 100%;
+    }
+    h1{
+        font-size: 3rem;
+        margin-bottom: 0;
+    }
+}
+
