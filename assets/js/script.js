@@ -240,6 +240,7 @@ $ ( document ).ready (function(){
             console.log(locationData);
             // get the location string - only suburb
             var locationString = locationData.results[0].components.suburb;
+            console.log(locationString);
 
             $('.location').html(locationString);
         });
